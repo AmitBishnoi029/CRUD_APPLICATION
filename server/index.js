@@ -23,12 +23,13 @@ dbConnection()
 
 
 
-port=process.env.PORT || 3000;
+port=3000;
 
 const schemaData=mongoose.Schema({
     name:String,
     email:String,
-    mobile:String
+    mobile:String,
+    dob:String
 },{
     timestamps:true
 })

@@ -12,20 +12,24 @@ function App() {
     name:"",
     email:"",
     mobile:"",
+    dob:"",
   })
   const [formDataEdit,setFormDataEdit]=useState({
     name:"",
     email:"",
     mobile:"",
+    dob:"",
     _id:""
   })
 
+  //array to store the list of data fetched from the server
   const [dataList,setDataList]=useState([]);
 
   const handleOnChange=(e)=>{
     const {value,name}=e.target
     setFormData((prev)=>{
       return{
+        //spread operator to copy previous state
         ...prev,
         [name]:value
       }
@@ -44,6 +48,7 @@ function App() {
         name:"",
         email:"",
         mobile:"",
+        dob:"",
       })
     }
   }
@@ -120,7 +125,6 @@ function App() {
     />
     )
    }
-
    <div className='tableContainer'>
     <table>
       <thead>
@@ -128,6 +132,7 @@ function App() {
           <th>Name</th>
           <th>Email</th>
           <th>Mobile Number</th>
+          <th>Date of Birth</th>
           <th></th>
         </tr>
       </thead>
@@ -135,11 +140,23 @@ function App() {
         {dataList[0]?(
           dataList.map((e1)=>{
             console.log(e1);
+            //here i formatted the date to show only date//month/year only not time
+            // Parse the date string from the backend and create a Date object
+            const dateObject = new Date(e1.dob);
+
+            // Convert the date to local time zone and format it as YYYY-MM-DD
+            const formattedDate = dateObject.toLocaleDateString('en-GB', {
+                 year: 'numeric',
+                 month: '2-digit',
+                 day: '2-digit'
+            });
+    
             return (
               <tr>
                 <td>{e1.name}</td>
                 <td>{e1.email}</td>
                 <td>{e1.mobile}</td>
+                <td>{formattedDate}</td>
                 <td>
                 <button className='btn btn-edit'onClick={()=>{setEditSection(true)
                 setFormDataEdit(e1)}}>Edit</button>
